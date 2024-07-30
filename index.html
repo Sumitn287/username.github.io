@@ -3,17 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GitHub Page</title>
+    <title>AI Image Generator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin-top: 50px;
         }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
     </style>
 </head>
 <body>
-    <h1>Welcome to My GitHub Page!</h1>
-    <p>This is a simple website hosted on GitHub Pages.</p>
+    <h1>Generate AI Images</h1>
+    <button id="generateImage">Generate Image</button>
+    <div id="imageContainer"></div>
+
+    <script>
+        document.getElementById('generateImage').addEventListener('click', () => {
+            fetch('https://api.deepai.org/api/text2img', {
+                method: 'POST',
+                headers: {
+                    'Api-Key': 'd61223de-2790-4a14-8d83-2d8783c9d3a1'
+                },
+                body: JSON.stringify({
+                    text: 'A beautiful landscape'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const img = document.createElement('img');
+                img.src = data.output_url;
+                document.getElementById('imageContainer').appendChild(img);
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
 </body>
 </html>
